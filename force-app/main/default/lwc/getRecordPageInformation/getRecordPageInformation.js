@@ -1,6 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue, getRecordUi } from 'lightning/uiRecordApi';
 import ACCOUNT_NAME from '@salesforce/schema/Account.Name';
+import { CurrentPageReference } from 'lightning/navigation'; 
 
 const fields = [ ACCOUNT_NAME ]
 
@@ -24,5 +25,12 @@ export default class GetRecordPageInformation extends LightningElement {
         } else if(error){
             console.error(error);
         }
+    }
+
+    @wire(CurrentPageReference)
+    pageReference;
+
+    get currentPageRefRecordId(){
+        return this.pageReference ? this.pageReference.attributes.recordId : ''
     }
 }
