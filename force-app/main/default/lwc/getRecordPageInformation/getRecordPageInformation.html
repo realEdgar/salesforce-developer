@@ -1,13 +1,25 @@
 <template>
     <lightning-card>
         <h2 slot="title">
-            getRecord and getFieldValue methods from lightning/uiRecordApi
+            getRecord and getFieldValue methods from 'lightning/uiRecordApi'
         </h2>
         <section class="slds-var-p-horizontal_large">
             <h3 class="slds-text-title_bold">{recordId}</h3>
             <p>
                 Name: {recordName}
             </p>
+        </section>
+    </lightning-card>
+    <lightning-card>
+        <section slot="title">
+            Account Layout Sections using getRecordUi method from 'lightning/uiRecordApi'
+        </section>
+        <section class="slds-var-p-horizontal_medium">
+            <template for:each={accountLayoutSections} for:item="section">
+                <article class="slds-box slds-theme_shade slds-var-m-around_x-small" key={section.id}>
+                    <span>{section.heading}</span>
+                </article>
+            </template>
         </section>
     </lightning-card>
 </template>
