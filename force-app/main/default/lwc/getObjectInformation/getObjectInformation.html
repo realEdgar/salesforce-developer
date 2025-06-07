@@ -26,8 +26,20 @@
                         ></lightning-combobox>
                     </lightning-layout-item>
                     <lightning-layout-item size="12" large-device-size="12" medium-device-size="12" small-device-size="12" padding="around-medium">
-                        <article class="slds-box" lwc:if={objectDetail}>
+                        <template lwc:if={isLoadingObjectInfo}>
+                            <div class="slds-is-relative" style="height: 5rem;">
+                                <lightning-spinner 
+                                  alternative-text="Loading" 
+                                  size="large"
+                                  variant="brand"
+                                ></lightning-spinner>
+                            </div>
+                        </template>
+                        <article class="slds-box" lwc:elseif={objectDetail}>
                             <c-object-details object-details={objectDetail} ></c-object-details>
+                        </article>
+                        <article class="slds-box" lwc:else>
+                            <p class="slds-text-align_center slds-text-heading_medium">{message}</p>
                         </article>
                     </lightning-layout-item>
                 </lightning-layout>
