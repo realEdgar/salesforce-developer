@@ -1,0 +1,30 @@
+<template>
+    <header>
+        <lightning-layout vertical-align="center">
+            <lightning-layout-item>
+                <figure style={theme}>
+                    <img src={objectDetails.themeInfo.iconUrl} alt={objectDetails.apiName}>
+                </figure>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" padding="horizontal-small">
+                <h1 class="slds-text-heading_medium" title="ApiName - Label - Plural Label">{objectDetails.apiName} -  {objectDetails.label} - {objectDetails.labelPlural}</h1>
+            </lightning-layout-item>
+        </lightning-layout>
+    </header>
+    <main class="slds-var-m-around_large">
+        <lightning-layout multiple-rows horizontal-align="spread" vertical-align="center">
+            <lightning-layout-item size="12" large-device-size="4" medium-device-size="6" small-device-size="12" padding="horizontal-small">
+                <div class="slds-box slds-theme_shade">
+                    <h3 class="slds-text-title_bold">Child Related Objects</h3>
+                </div>
+                <lightning-datatable
+                    key-field="childObjectApiName"
+                    data={objectDetails.childRelationships}
+                    columns={childObjectsColumns}
+                    hide-checkbox-column
+                    show-row-number-column
+                ></lightning-datatable>
+            </lightning-layout-item>
+        </lightning-layout>
+    </main>
+</template>
