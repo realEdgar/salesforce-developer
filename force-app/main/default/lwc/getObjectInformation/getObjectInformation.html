@@ -15,7 +15,7 @@
             </template>
             <template lwc:else>
                 <lightning-layout multiple-rows>
-                    <lightning-layout-item size="12" large-device-size="3" medium-device-size="3" small-device-size="12">
+                    <lightning-layout-item size="12" large-device-size="3" medium-device-size="3" small-device-size="12" padding="around-medium">
                         <lightning-combobox
                             name="objects"
                             label="Select Object"
@@ -24,6 +24,11 @@
                             options={availableObjectOptions}
                             onchange={handleObjectSelection}
                         ></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" large-device-size="12" medium-device-size="12" small-device-size="12" padding="around-medium">
+                        <article class="slds-box" lwc:if={objectDetail}>
+                            <c-object-details object-details={objectDetail} ></c-object-details>
+                        </article>
                     </lightning-layout-item>
                 </lightning-layout>
             </template>
