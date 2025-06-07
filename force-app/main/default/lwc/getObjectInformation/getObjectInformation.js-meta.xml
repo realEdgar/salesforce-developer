@@ -3,7 +3,7 @@
     <apiVersion>63.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Get Object Information, Dynamically</masterLabel>
-    <masterLabel>This component is to get object information, making easier look the configuration of the object.</masterLabel>
+    <description>This component is to get object information, making easier look the configuration of the object.</description>
     <targets>
         <target>
             lightning__Tab

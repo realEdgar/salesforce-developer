@@ -3,8 +3,30 @@
         <h1 slot="title">
             Get Object Information, dynamically
         </h1>
-        <main>
-            
+        <main class="slds-var-p-horizontal_medium">
+            <template lwc:if={isLoading}>
+                <section class="slds-is-relative slds-var-p-around_xx-large" style="height: 10rem;">
+                    <lightning-spinner 
+                      alternative-text="Loading" 
+                      size="large"
+                      variant="brand"
+                    ></lightning-spinner>
+                </section>
+            </template>
+            <template lwc:else>
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12" large-device-size="3" medium-device-size="3" small-device-size="12">
+                        <lightning-combobox
+                            name="objects"
+                            label="Select Object"
+                            value={selectedObject}
+                            placeholder="Select Object"
+                            options={availableObjectOptions}
+                            onchange={handleObjectSelection}
+                        ></lightning-combobox>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
         </main>
     </lightning-card>
 </template>
