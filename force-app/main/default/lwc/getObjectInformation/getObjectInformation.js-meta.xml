@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Get Object Information, Dynamically</masterLabel>
+    <masterLabel>This component is to get object information, making easier look the configuration of the object.</masterLabel>
+    <targets>
+        <target>
+            lightning__Tab
+        </target>
+    </targets>
+</LightningComponentBundle>
