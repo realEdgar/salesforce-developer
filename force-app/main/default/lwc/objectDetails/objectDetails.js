@@ -11,6 +11,6 @@ export default class ObjectDetails extends LightningElement {
     childObjectsColumns = COLS_CHILDRELATED;
 
     get theme(){
-        return `background-color: #${this.objectDetails.themeInfo.color}`;
+        return `background-color: #${this.objectDetails.themeInfo?.color ?? 'fff'}`;
     }
 }

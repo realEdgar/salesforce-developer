@@ -1,7 +1,7 @@
 <template>
     <header>
         <lightning-layout vertical-align="center">
-            <lightning-layout-item>
+            <lightning-layout-item lwc:if={objectDetails.themeInfo}>
                 <figure style={theme}>
                     <img src={objectDetails.themeInfo.iconUrl} alt={objectDetails.apiName}>
                 </figure>
