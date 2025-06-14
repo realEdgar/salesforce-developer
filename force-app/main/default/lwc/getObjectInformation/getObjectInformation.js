@@ -35,7 +35,6 @@ export default class GetObjectInformation extends LightningElement {
     @wire(getObjectInfo, { objectApiName: '$selectedObject'})
     handleObjectInformation({ error, data }){
         if(data){
-            console.log(data);
             this.objectDetail = data;
             this.isLoadingObjectInfo = false;
         } else if(error){
