@@ -1,0 +1,96 @@
+<template>
+    <article class="slds-box slds-theme_default">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="4" padding="around-small">
+                <form onsubmit={handleSubmitQuery}>
+                    <h2 class="slds-text-heading_small slds-var-m-bottom_small">
+                        Build Query
+                    </h2>
+                    <lightning-textarea 
+                        type="text"
+                        label="SELECT"
+                        onchange={handleChange}
+                        name="fields"
+                        placeholder="e.g. Id, Name, ... , Status"
+                        required
+                    ></lightning-textarea>
+                    <lightning-input 
+                        type="text"
+                        label="FROM"
+                        onchange={handleChange}
+                        name="SObjectApiName"
+                        placeholder="e.g. Account"
+                        required
+                    ></lightning-input>
+                    <lightning-input 
+                        type="text"
+                        label="WHERE"
+                        onchange={handleChange}
+                        placeholder="e.g. Status = 'Closed'"
+                        name="filters"
+                    ></lightning-input>
+                    <lightning-input 
+                        type="number"
+                        label="LIMIT"
+                        onchange={handleChange}
+                        placeholder="e.g. 10"
+                        name="noRecords"
+                    ></lightning-input>
+                    <p lwc:if={isError} class="slds-var-m-around_small slds-text-align_center slds-text-color_error">
+                        {errorMessage}
+                    </p>
+                    <div class="slds-var-m-top_small">
+                        <button type="submit" class="slds-button slds-button_brand slds-large-size_5-of-5">Query</button>
+                    </div>
+                </form>
+            </lightning-layout-item>
+            <lightning-layout-item size="8" padding="around-small">
+                <template lwc:if={records.length}>
+                    <header class="slds-box slds-theme_shade">
+                        <h3 class="slds-text-title_bold">{SObjectApiName} ({records.length})</h3>
+                    </header>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={records}
+                        columns={columns}
+                        show-row-number-column
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                    <template lwc:if={hasChildRecords}>
+                        <h2 class="slds-var-p-around_small slds-var-m-top_large slds-border_top slds-border_bottom slds-theme_alert-texture slds-text-align_center">
+                            Child Records ({childSObjectApiName})
+                        </h2>
+                        <template for:each={childRecords} for:item="items">
+                            <div class="slds-var-p-around_small" key={items.reference}>
+                                <header class="slds-box slds-theme_shade">
+                                    <h3 class="slds-text-title_bold">{childSObjectApiName} ({items.records.length}) Related to: {items.reference}</h3>
+                                </header>
+                                <template lwc:if={items.records.length}>
+                                    <lightning-datatable
+                                        key-field="Id"
+                                        data={items.records}
+                                        columns={childColumns}
+                                        show-row-number-column
+                                        hide-checkbox-column
+                                    ></lightning-datatable>
+                                </template>
+                                <template lwc:else>
+                                    <p class="slds-box slds-text-align_center slds-text-color_error">
+                                        this {items.reference} does not has child records
+                                    </p>
+                                </template>
+                            </div>
+                        </template>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <article class="slds-box slds-theme_shade">
+                        <p class="slds-text-heading_small slds-text-align_center">
+                            Build a query to get some data here...
+                        </p>
+                    </article>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+    </article>
+</template>

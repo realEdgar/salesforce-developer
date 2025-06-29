@@ -36,4 +36,30 @@ public with sharing class UtilityClass {
         }
         return output;
     }
+    @AuraEnabled
+    public static String getRecords(String fields, String SObjectApiName, String filters, Integer noRecords){
+        if(String.isBlank(fields) || String.isBlank(SObjectApiName)){
+            return 'BAD REQUEST';
+        }
+
+        String query = 'SELECT ' + fields + ' FROM ' + SObjectApiName;
+        if(!String.isBlank(filters)){
+            query += ' WHERE ' + filters;
+        }
+
+        if(noRecords != null){
+            query += ' LIMIT ' + noRecords;
+        }
+
+        String result = '';
+
+        try {
+            List<SObject> records = Database.query(query);
+            result = JSON.serialize(records);
+        } catch(Exception error) {
+            result = 'ERROR: ' + error.getMessage();
+        }
+
+        return result;
+    }
 }
