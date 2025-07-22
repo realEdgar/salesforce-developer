@@ -84,6 +84,7 @@ export default class RetrieveDataDynamically extends LightningElement {
     }
 
     buildColumns(){
+        this.hasChildRecords = false;
         let startIndex = this.fields.indexOf('(');
         let endIndex = this.fields.indexOf(')');
         let substring = this.fields.substring(startIndex, endIndex + 1);
@@ -101,19 +102,22 @@ export default class RetrieveDataDynamically extends LightningElement {
                 return {
                     label: field,
                     fieldName: field,
+                    wrapText: true
                 }
             });
             this.childColumns = childCols;
         }
-        const columns = fields.replaceAll(' ', '').replaceAll(',,', ',').split(',').map(field => {
-            
+        const columns = [];
+        for(let field of fields.replaceAll(' ', '').replaceAll(',,', ',').split(',')) {
+            if(!field) continue;
             let isParentReference = field.includes('.');
-            return {
+            columns.push({
                 label: field,
                 fieldName: isParentReference ? field.split('.').join(''): field,
-                parentRef: isParentReference
-            }
-        });
+                parentRef: isParentReference,
+                wrapText: true
+            });
+        }
         this.columns = columns;
     }
 }

@@ -1,0 +1,73 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item size="4">
+            <article class="slds-box slds-theme_shade slds-var-m-right_small">
+                <h1 class="slds-text-heading_small slds-text-align_center slds-var-m-bottom_medium">
+                    Build Query (SOQL)
+                </h1>
+                <form onsubmit={handleQuerySubmit}>
+                    <lightning-textarea name="fields" type="text" label="SELECT" onchange={handleChange} placeholder="e.g. Id, Name, ... , Status" required></lightning-textarea>
+                    <lightning-input name="SObjectApiName" type="text" label="FROM" onchange={handleChange}  placeholder="e.g. Account" required></lightning-input>
+                    <lightning-textarea name="filters" type="text" label="WHERE" onchange={handleChange} placeholder="e.g. Status = 'Closed'"></lightning-textarea>
+                    <lightning-input name="noRecords" type="number" label="LIMIT" onchange={handleChange} placeholder="e.g. 10"></lightning-input>
+                    <template lwc:if={isError}>
+                        <p class="slds-var-p-around_medium slds-text-color_error">
+                            {errorMessage}
+                        </p>
+                    </template>
+                    <div class="slds-var-m-top_medium">
+                        <button type="submit" class="slds-button slds-button_brand slds-large-size_5-of-5">Query Records</button>
+                    </div>
+                </form>
+            </article>
+        </lightning-layout-item>
+        <lightning-layout-item size="8">
+            <article class="slds-box slds-theme_shade">
+                <!-- Datatables to create -->
+                 <template lwc:if={configObject}>
+                    <header class="slds-box">
+                        <h2 class="slds-text-heading_small">
+                            {SObjectApiName} Records ({data.length})
+                        </h2>
+                    </header>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={data}
+                        columns={mainObjectColumns}
+                        hide-checkbox-column
+                        show-row-number-column
+                    ></lightning-datatable>
+                    <template lwc:if={dataHasChildRecords}>
+                        <template for:each={data} for:item="record">
+                            <article class="slds-box slds-var-m-vertical_small" key={record.Id}>
+                                <template for:each={record.childObjects} for:item="childObject">
+                                    <article class="slds-box slds-theme_shade slds-var-m-around_small" key={childObject.object}>
+                                        <template lwc:if={childObject.data.length}>
+                                            <header class="slds-box">
+                                                <h3 class="slds-text-heading_small">
+                                                    Related {childObject.object} ({childObject.data.length}) - {record.Id}
+                                                </h3>
+                                            </header>
+                                            <lightning-datatable
+                                                key-field="Id"
+                                                data={childObject.data}
+                                                columns={childObject.cols}
+                                                hide-checkbox-column
+                                                show-row-number-column
+                                            ></lightning-datatable>
+                                        </template>
+                                        <template lwc:else>
+                                            <p class="slds-box slds-theme_default slds-text-align_center slds-text-color_error">
+                                                There are no related {childObject.object} to {SObjectApiName}({record.Id}) 
+                                            </p>
+                                        </template>
+                                    </article>
+                                </template>
+                            </article>
+                        </template>
+                    </template>
+                 </template>
+            </article>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
