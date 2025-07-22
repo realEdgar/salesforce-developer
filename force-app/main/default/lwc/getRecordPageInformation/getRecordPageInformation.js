@@ -2,11 +2,13 @@ import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue, getRecordUi } from 'lightning/uiRecordApi';
 import ACCOUNT_NAME from '@salesforce/schema/Account.Name';
 import { CurrentPageReference } from 'lightning/navigation'; 
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 
 const fields = [ ACCOUNT_NAME ]
 
 export default class GetRecordPageInformation extends LightningElement {
     @api recordId;
+    @api objectApiName;
     accountLayoutSections = [];
 
     @wire(getRecord, {
@@ -32,5 +34,14 @@ export default class GetRecordPageInformation extends LightningElement {
 
     get currentPageRefRecordId(){
         return this.pageReference ? this.pageReference.attributes.recordId : ''
+    }
+
+    @wire(getObjectInfo, {objectApiName: '$objectApiName'})
+    handleObjectInfo({ error, data }){
+        if(data){
+            console.log(data);
+        } else if(error){
+            console.error(error);
+        }
     }
 }
