@@ -1,0 +1,31 @@
+<template>
+    <template lwc:if={isLoading}>
+        <div class="slds-is-relative" style="height: 10rem;">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </div>
+    </template>
+    <template lwc:else>
+        <lightning-layout horizontal-align="center">
+            <lightning-layout-item size="4" padding="horizontal-medium">
+                <div class="slds-box slds-theme_shade">
+                    <lightning-combobox name="sobject" label="FROM" value={selectedSObject}
+                        placeholder="Select SObject" options={validSObjects} onchange={handleSelectedObject}
+                        required></lightning-combobox>
+                    <lightning-textarea max-length="1000" name="defineCriteria" label="WHERE"
+                        placeholder="StageName = 'Closed Won'" value={filters} variant="standard"
+                        onkeyup={handleKeyup}></lightning-textarea>
+                    <lightning-input type="number" label="LIMIT" value={limitOfRecords}
+                        onchange={handleLimitChange}></lightning-input>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="8" padding="horizontal-medium">
+                <div class="slds-box slds-theme_shade">
+                    <lightning-dual-listbox id="selectChildOptions" name="Fields" label="Select Fields"
+                        source-label="Available Options" selected-label="Selected Options"
+                        options={availableSObjectFields} value={selectedFields} onchange={handleFieldSelection}>
+                    </lightning-dual-listbox>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>

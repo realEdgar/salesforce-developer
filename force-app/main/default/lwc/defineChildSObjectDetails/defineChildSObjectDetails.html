@@ -1,0 +1,22 @@
+<template>
+    <template lwc:if={isLoading}>
+        <div class="slds-is-relative" style="height: 10rem;">
+            <lightning-spinner 
+                alternative-text="Loading" 
+                size="large"
+                variant="brand"
+            ></lightning-spinner>
+        </div>
+    </template>
+    <template lwc:else>
+        <article class="slds-box slds-theme_shade">
+            <lightning-datatable
+                key-field="childObjectApiName"
+                data={sOjectDetails}
+                columns={childObjectsColumns}
+                show-row-number-column
+                onrowselection={handleRowSelection}
+            ></lightning-datatable>
+        </article>
+    </template>
+</template>
