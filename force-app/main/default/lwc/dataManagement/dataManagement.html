@@ -1,0 +1,48 @@
+<template>
+    <article class="slds-card">
+        <template lwc:if={isData}>
+            <header class="slds-var-p-around_large">
+                <lightning-progress-indicator current-step={currentStep} type="path" variant="base">
+                    <template for:each={steps} for:item="step">
+                        <lightning-progress-step key={step.value} label={step.label} value={step.value}></lightning-progress-step>
+                    </template>
+                </lightning-progress-indicator>
+            </header>
+            <main class="slds-var-p-around_large">
+
+            </main>
+            <footer class="slds-theme_shade slds-var-p-around_medium">
+                <lightning-layout horizontal-align="spread">
+                    <template lwc:if={isFirstStep}>
+                        <lightning-layout-item flexibility="auto"></lightning-layout-item>
+                        <lightning-layout-item flexibility="auto">
+                            <lightning-button variant="brand" label="Next" onclick={handleNext}></lightning-button>
+                        </lightning-layout-item>
+                    </template>
+                    <template lwc:elseif={isLastStep}>
+                        <lightning-layout-item flexibility="auto">
+                            <lightning-button label="Previous" onclick={handlePrevious}></lightning-button>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto">
+                            <lightning-button variant="brand" label="Complete"
+                                onclick={handleCompleteDataManagement}></lightning-button>
+                        </lightning-layout-item>
+                    </template>
+                    <template lwc:else>
+                        <lightning-layout-item flexibility="auto">
+                            <lightning-button label="Previous" onclick={handlePrevious}></lightning-button>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto">
+                            <lightning-button variant="brand" label="Next" onclick={handleNext}></lightning-button>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </footer>
+        </template>
+        <template lwc:else>
+            <div class="slds-is-relative" style="height: 20rem;">
+                <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+            </div>
+        </template>
+    </article>
+</template>
